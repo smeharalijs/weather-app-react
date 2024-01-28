@@ -19,8 +19,8 @@ function Dashbord() {
         fetch(`http://api.openweathermap.org/data/2.5/weather?q=${search},pakistan&units=metric&appid=${apiKey}`)
             .then((res) => res.json())
             .then((res) => {
-                setCity(res);
-                console.log(res);
+                console.log(res.main);
+                setCity(res.main);
 
             })
             .catch((error) => {
@@ -32,13 +32,7 @@ function Dashbord() {
         localStorage.setItem('SearchHistory', JSON.stringify(SearchHistory));
     };
 
-    if(city){
-        return(
-            <div>
-                <h1>loading...</h1>
-            </div>
-        )
-    }
+    
 
     return (
         <div className="bg-blue-200 p-8 min-h-screen">
@@ -57,14 +51,15 @@ function Dashbord() {
             </div>
             {city && (
                 <div className="bg-white p-32 rounded shadow-md mb-4 w-[100%]  text-center ">
-                    <h2 className="text-xl font-bold mb-2">Weather: {city.main.temp} °C</h2>
-                    <p>Humidity: {city.main.humidity}%</p>
-                    <p>Min Temperature: {city.main.temp_min} °C</p>
-                    <p>Max Temperature: {city.main.temp_max} °C</p>
+                    <h2 className="text-xl font-bold mb-2">Weather: {city.temp} °C</h2>
+
+                    <p>Humidity: {city.humidity}%</p>
+                    <p>Min Temperature: {city.temp_min} °C</p>
+                    <p>Max Temperature: {city.temp_max} °C</p>
                 </div>
             )}
 
-            <SearchHistory searchHistory={searchHistory} />
+            {/* <SearchHistory searchHistory={searchHistory} /> */}
         </div>
     );
 }
